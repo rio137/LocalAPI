@@ -1,0 +1,476 @@
+{
+	"info": {
+		"_postman_id": "356df236-2042-4806-b857-d729b6a01eeb",
+		"name": "CollectionLocalAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25339679"
+	},
+	"item": [
+		{
+			"name": "myFolder",
+			"item": [
+				{
+					"name": "Get Single Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// testing if status code is 200 or not\r",
+									"\r",
+									"pm.test(\"Status code is 200\" , () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"}\r",
+									");\r",
+									"\r",
+									"//testing if status code name is ok or not\r",
+									"\r",
+									"pm.test(\"Status code name\" , () => {\r",
+									"\tpm.response.to.have.status(\"OK\");\r",
+									"}\r",
+									");\r",
+									"\r",
+									"\r",
+									"//testing if header consists of content-type\r",
+									"\r",
+									"pm.test(\"Content-type header is present\", () => {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"// testing if content-type's value is perfect or not\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\" , () => {\r",
+									"\tpm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"//test if a particular cookie is present or not\r",
+									"pm.test(\"Cookie language is present\" , () => {\r",
+									"\tpm.expect(pm.cookies.has('language')).to.be.true;\r",
+									"\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"//Testing the response time\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", () =>{\r",
+									"\tpm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"// Testing the data type inside request body\r",
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Test data type of the response\", () => {\r",
+									"\tpm.expect(jsonData).to.be.an(\"object\");\r",
+									"\tpm.expect(jsonData.name).to.be.a(\"string\");\r",
+									"\tpm.expect(jsonData.id).to.be.a(\"number\");\r",
+									"\tpm.expect(jsonData.courses).to.be.an(\"array\");\r",
+									"});\r",
+									"\r",
+									"//test array contents in body\r",
+									"pm.test(\"Test array properties\" , () => {\r",
+									"\t// course include \"HTML\"\r",
+									"\tpm.expect(jsonData.courses).to.include(\"C sharp\");\r",
+									"\t//courses array must include all listed items\r",
+									"\tpm.expect(jsonData.courses).to.have.members([\"C sharp\",\"Python\"]);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//testing all the values\r",
+									"pm.test(\"value of JSON Fields for id 2\", () =>{\r",
+									"\tpm.expect(jsonData.id).to.eql(13);\r",
+									"\tpm.expect(jsonData.name).to.eql(\"Rishab\");\r",
+									"\tpm.expect(jsonData.location).to.eql(\"Bhutan\");\r",
+									"\tpm.expect(jsonData.phone).to.eql(\"7472422623\");\r",
+									"\tpm.expect(jsonData.courses[0]).to.eql(\"C sharp\");\r",
+									"\tpm.expect(jsonData.courses[1]).to.eql(\"Python\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//testing json schema\r",
+									"\r",
+									"var schema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"id\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    },\r",
+									"    \"name\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"location\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"phone\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"courses\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": [\r",
+									"        {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        {\r",
+									"          \"type\": \"string\"\r",
+									"        }\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"id\",\r",
+									"    \"name\",\r",
+									"    \"location\",\r",
+									"    \"phone\",\r",
+									"    \"courses\"\r",
+									"  ]\r",
+									"}\r",
+									"\r",
+									"pm.test('Schema is valid', () => {\r",
+									"pm.expect(tv4.validate(jsonData,schema)).to.be.true;\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//local variable\r",
+									"\r",
+									"pm.variables.set(\"url_local\",\"http://localhost:3000/students\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_local}}/{{id}}",
+							"host": [
+								"{{url_local}}"
+							],
+							"path": [
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// testing if status code is 200 or not\r",
+									"\r",
+									"pm.test(\"Status code is 200\" , () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"}\r",
+									");\r",
+									"\r",
+									"\r",
+									"//testing if status code name is ok or not\r",
+									"pm.test(\"Status code name\" , () => {\r",
+									"\tpm.response.to.have.status(\"OK\");\r",
+									"}\r",
+									");\r",
+									"\r",
+									"\r",
+									"//testing if header consists of content-type\r",
+									"\r",
+									"pm.test(\"Content-type header is present\", () => {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"// testing if content-type's value is perfect or not\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\" , () => {\r",
+									"\tpm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//Testing the response time\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", () =>{\r",
+									"\tpm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_collection}}",
+							"host": [
+								"{{url_collection}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a New Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// testing if status code is 201/202 or not\r",
+									"\r",
+									"pm.test(\"Successful post request\", () => {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//testing if status code name is ok or not\r",
+									"\r",
+									"pm.test(\"Status code name\" , () => {\r",
+									"\tpm.response.to.have.status(\"Created\");\r",
+									"}\r",
+									");\r",
+									"\r",
+									"\r",
+									"\r",
+									"//testing if header consists of content-type\r",
+									"\r",
+									"pm.test(\"Content-type header is present\", () => {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"// testing if content-type's value is perfect or not\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\" , () => {\r",
+									"\tpm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//Testing the response time\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", () =>{\r",
+									"\tpm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"var datajson = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"id\",datajson.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"Rishab\",\r\n        \"location\": \"Bhutan\",\r\n        \"phone\": \"7472422623\",\r\n        \"courses\": [\r\n            \"C sharp\",\r\n            \"Python\"\r\n        ]\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_collection}}",
+							"host": [
+								"{{url_collection}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Old Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// testing if status code is 200 or not\r",
+									"\r",
+									"pm.test(\"Status code is 200\" , () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"}\r",
+									");\r",
+									"\r",
+									"//testing if status code name is ok or not\r",
+									"pm.test(\"Status code name\" , () => {\r",
+									"\tpm.response.to.have.status(\"OK\");\r",
+									"}\r",
+									");\r",
+									"\r",
+									"//testing if header consists of content-type\r",
+									"\r",
+									"pm.test(\"Content-type header is present\", () => {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"// testing if content-type's value is perfect or not\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\" , () => {\r",
+									"\tpm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//Testing the response time\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", () =>{\r",
+									"\tpm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\": \"Shah Rukh\",\r\n        \"location\": \"Pakistan\",\r\n        \"phone\": \"973252414117\",\r\n        \"courses\": [\r\n            \"C++\",\r\n            \"Playwrite\"\r\n        ]\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_collection}}/8",
+							"host": [
+								"{{url_collection}}"
+							],
+							"path": [
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// testing if status code is 200 or not\r",
+									"pm.test(\"Status code is 200\" , () => {\r",
+									"\tpm.response.to.have.status(200);\r",
+									"}\r",
+									");\r",
+									"\r",
+									"\r",
+									"//testing if status code name is ok or not\r",
+									"pm.test(\"Status code name\" , () => {\r",
+									"\tpm.response.to.have.status(\"OK\");\r",
+									"}\r",
+									");\r",
+									"\r",
+									"//testing if header consists of content-type\r",
+									"\r",
+									"pm.test(\"Content-type header is present\", () => {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"// testing if content-type's value is perfect or not\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\" , () => {\r",
+									"\tpm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+									"\r",
+									"});\r",
+									"\r",
+									"//Testing the response time\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", () =>{\r",
+									"\tpm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_collection}}/{{id}}",
+							"host": [
+								"{{url_collection}}"
+							],
+							"path": [
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url_collection",
+			"value": "http://localhost:3000/students",
+			"type": "string"
+		}
+	]
+}
