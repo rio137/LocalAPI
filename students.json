@@ -1,0 +1,84 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "name": "John",
+      "location": "india",
+      "phone": "1234567890",
+      "courses": [
+        "Java",
+        "Selenium"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Fuad",
+      "location": "bangladesh",
+      "phone": "36426251715",
+      "courses": [
+        "HTML",
+        "Cypress"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Tamim",
+      "location": "nepal",
+      "phone": "947353525412",
+      "courses": [
+        "CSS",
+        "Katalon"
+      ]
+    },
+    {
+      "name": "Shah Rukh",
+      "location": "Pakistan",
+      "phone": "973252414117",
+      "courses": [
+        "C++",
+        "Playwrite"
+      ],
+      "id": 8
+    },
+    {
+      "name": "Haripal",
+      "location": "Pakistan",
+      "phone": "973252414117",
+      "courses": [
+        "C++",
+        "Playwrite"
+      ],
+      "id": 9
+    },
+    {
+      "name": "Rishab",
+      "location": "Bhutan",
+      "phone": "7472422623",
+      "courses": [
+        "C sharp",
+        "Python"
+      ],
+      "id": 10
+    },
+    {
+      "name": "Rishab",
+      "location": "Bhutan",
+      "phone": "7472422623",
+      "courses": [
+        "C sharp",
+        "Python"
+      ],
+      "id": 11
+    },
+    {
+      "name": "Rishab",
+      "location": "Bhutan",
+      "phone": "7472422623",
+      "courses": [
+        "C sharp",
+        "Python"
+      ],
+      "id": 12
+    }
+  ]
+}
